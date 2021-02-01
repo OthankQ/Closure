@@ -2,6 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 
+import CoinCounter from './components/CoinCounter'
+
 export default function App() {
 
   const [pennyCount, setPennyCount] = useState(0);
@@ -24,6 +26,8 @@ export default function App() {
         <Text> = </Text>
         <Text>$ {(nickelCount * 0.05).toFixed(2)}</Text>
       </View>
+
+      <CoinCounter></CoinCounter>
 
       <View style={styles.row}>
         <Text>Dimes X </Text>
