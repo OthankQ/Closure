@@ -13,28 +13,28 @@ export default function App() {
     <View style={styles.container}>
       <View style={styles.row}>
         <Text>Pennies X </Text>
-        <TextInput onChangeText={number => setPennyCount(number)} style={styles.input}></TextInput>
+        <TextInput onChangeText={number => setPennyCount(number)} style={styles.input} keyboardType={"number-pad"}></TextInput>
         <Text> = </Text>
         <Text>$ {(pennyCount * 0.01).toFixed(2)}</Text>
       </View>
 
       <View style={styles.row}>
         <Text>Nickels X </Text>
-        <TextInput onChangeText={number => setNickelCount(number)} style={styles.input}></TextInput>
+        <TextInput onChangeText={number => setNickelCount(number)} style={styles.input} keyboardType={"number-pad"}></TextInput>
         <Text> = </Text>
         <Text>$ {(nickelCount * 0.05).toFixed(2)}</Text>
       </View>
 
       <View style={styles.row}>
         <Text>Dimes X </Text>
-        <TextInput onChangeText={number => setDimeCount(number)} style={styles.input}></TextInput>
+        <TextInput onChangeText={number => setDimeCount(number)} style={styles.input} keyboardType={"number-pad"}></TextInput>
         <Text> = </Text>
         <Text>$ {(dimeCount * 0.10).toFixed(2)}</Text>
       </View>
 
       <View style={styles.row}>
         <Text>Quarters X </Text>
-        <TextInput onChangeText={number => setQuarterCount(number)} style={styles.input}></TextInput>
+        <TextInput onChangeText={number => setQuarterCount(number)} style={styles.input} keyboardType={"number-pad"}></TextInput>
         <Text> = </Text>
         <Text>$ {(quarterCount * 0.25).toFixed(2)}</Text>
       </View>
