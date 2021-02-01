@@ -27,7 +27,7 @@ export default function App() {
         <Text>$ {(nickelCount * 0.05).toFixed(2)}</Text>
       </View>
 
-      <CoinCounter></CoinCounter>
+      <CoinCounter whatCoin='Penny'></CoinCounter>
 
       <View style={styles.row}>
         <Text>Dimes X </Text>
