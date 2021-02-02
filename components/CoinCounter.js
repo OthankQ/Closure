@@ -8,7 +8,7 @@ export default function CoinCounter(props) {
     return(
         <View style={props.style}>
             <Text>{props.coinName} X </Text>
-            <TextInput onChangeText={number => setCoinCount(number)} style={styles.input} keyboardType={"number-pad"}></TextInput>
+            <TextInput onChangeText={(number) => {setCoinCount(number); console.log('Why!!')}} style={styles.input} keyboardType={"number-pad"}></TextInput>
             <Text> = </Text>
             <Text>$ {(coinCount * props.counter).toFixed(2)}</Text>
         </View>

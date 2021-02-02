@@ -3,19 +3,22 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 import CoinCounter from './components/CoinCounter'
+import TotalTextView from './components/TotalTextView'
 
 export default function App() {
 
-  const [pennyCount, setPennyCount] = useState(0);
-  const [nickelCount, setNickelCount] = useState(0);
-  const [dimeCount, setDimeCount] = useState(0);
-  const [quarterCount, setQuarterCount] = useState(0);
+  // const [pennyCount, setPennyCount] = useState(0);
+  // const [nickelCount, setNickelCount] = useState(0);
+  // const [dimeCount, setDimeCount] = useState(0);
+  // const [quarterCount, setQuarterCount] = useState(0);
 
   // State that tracks coin total and bill total
   const [coinTotal, setCoinTotal] = useState(0);
 
+
+  // I am working on a function to catch the change in TEXT from CoinCounter.js and update coinTotal State
   function addToTotal() {
-    setCoinTotal(10);
+    console.log('addtototal triggerd')
   }
 
   return (
@@ -31,6 +34,7 @@ export default function App() {
 
       {/* Whenever one of the coincounter rerenders, rerender cointotal component with new state */}
 
+      <TotalTextView></TotalTextView>
       <Text>{coinTotal}</Text>
 
       <StatusBar style="auto" />
