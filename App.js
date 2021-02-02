@@ -11,42 +11,27 @@ export default function App() {
   const [dimeCount, setDimeCount] = useState(0);
   const [quarterCount, setQuarterCount] = useState(0);
 
+  // State that tracks coin total and bill total
+  const [coinTotal, setCoinTotal] = useState(0);
+
+  function addToTotal() {
+    setCoinTotal(10);
+  }
+
   return (
     <View style={styles.container}>
-      <View style={styles.row}>
-        <Text>Pennies X </Text>
-        <TextInput onChangeText={number => setPennyCount(number)} style={styles.input} keyboardType={"number-pad"}></TextInput>
-        <Text> = </Text>
-        <Text>$ {(pennyCount * 0.01).toFixed(2)}</Text>
-      </View>
 
-      <View style={styles.row}>
-        <Text>Nickels X </Text>
-        <TextInput onChangeText={number => setNickelCount(number)} style={styles.input} keyboardType={"number-pad"}></TextInput>
-        <Text> = </Text>
-        <Text>$ {(nickelCount * 0.05).toFixed(2)}</Text>
-      </View>
+      <CoinCounter coinName="Pennies" style={styles.row} counter={0.01}></CoinCounter>
 
-      <CoinCounter whatCoin='Penny'></CoinCounter>
+      <CoinCounter coinName="Nickels" style={styles.row} counter={0.05}></CoinCounter>
 
-      <View style={styles.row}>
-        <Text>Dimes X </Text>
-        <TextInput onChangeText={number => setDimeCount(number)} style={styles.input} keyboardType={"number-pad"}></TextInput>
-        <Text> = </Text>
-        <Text>$ {(dimeCount * 0.10).toFixed(2)}</Text>
-      </View>
+      <CoinCounter coinName="Dimes" style={styles.row} counter={0.10}></CoinCounter>
 
-      <View style={styles.row}>
-        <Text>Quarters X </Text>
-        <TextInput onChangeText={number => setQuarterCount(number)} style={styles.input} keyboardType={"number-pad"}></TextInput>
-        <Text> = </Text>
-        <Text>$ {(quarterCount * 0.25).toFixed(2)}</Text>
-      </View>
+      <CoinCounter coinName="Quarters" style={styles.row} counter={0.25}></CoinCounter>
 
-      <View style={styles.row}>
-        <Text>Coin Total = </Text>
-        <Text>$ {(pennyCount * 0.01 + nickelCount * 0.05 + dimeCount * 0.10 + quarterCount * 0.25).toFixed(2)}</Text>
-      </View>
+      {/* Whenever one of the coincounter rerenders, rerender cointotal component with new state */}
+
+      <Text>{coinTotal}</Text>
 
       <StatusBar style="auto" />
     </View>
@@ -61,15 +46,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  input: {
-    borderWidth: 2,  // size/width of the border
-    borderColor: 'lightgrey',  // color of the border
-    paddingLeft: 10,
-    marginLeft: 10,
-  },
+  // input: {
+  //   borderWidth: 2,  // size/width of the border
+  //   borderColor: 'lightgrey',  // color of the border
+  //   paddingLeft: 10,
+  //   marginLeft: 10,
+  // },
 
   row: {
     flexDirection: 'row',
     marginBottom: 20,
+    textAlign: 'center'
   }
 });
