@@ -88,7 +88,7 @@ export default function App() {
 
       {/* Total counted minus the opening amount */}
       <View style={styles.row}>
-        <Text>Grand Total: $ {grandTotal}</Text>
+        <Text>Grand Total(Sub Total - Opening Amount): $ {grandTotal}</Text>
       </View>
 
       {/* Total amount recorded on the register. */}
@@ -99,7 +99,7 @@ export default function App() {
 
       {/* Shows how much you are short or over or even by. */}
       <View style={styles.row}>
-        <Text>Result: $ {(grandTotal - recordedAmount).toFixed(2)}</Text>
+        <Text>Result(Grand Total - Recorded Total): $ {(grandTotal - recordedAmount).toFixed(2)}</Text>
       </View>
 
 
@@ -115,15 +115,19 @@ const styles = StyleSheet.create({
     flexGrow:1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 80
+    padding: 80,
+    borderColor: 'red',
+    borderWidth: 1
   },
 
   input: {
-    borderWidth: 2,  // size/width of the border
+    borderWidth: 1,  // size/width of the border
     borderColor: 'lightgrey',  // color of the border
     paddingLeft: 10,
     marginLeft: 10,
-    width: 80
+    width: 80,
+    marginTop: 5,
+    marginBottom: 5
   },
 
   row: {
@@ -132,6 +136,8 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 300
+    width: 400,
+    borderColor: 'red',
+    borderWidth: 1
   }
 });

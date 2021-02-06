@@ -18,10 +18,12 @@ export default function Counter(props) {
 const styles = StyleSheet.create({
 
     input: {
-        borderWidth: 2,  // size/width of the border
+        borderWidth: 1,  // size/width of the border
         borderColor: 'lightgrey',  // color of the border
         paddingLeft: 10,
         marginLeft: 10,
-        width: 80
+        width: 80,
+        marginTop: 5,
+        marginBottom: 5
     }
 })
