@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 
-export default function CoinCounter(props) {
+export default function Counter(props) {
 
     const [coinCount, setCoinCount] = useState(0);
 

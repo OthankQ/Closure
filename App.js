@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
 
-import CoinCounter from './components/CoinCounter'
-import TotalTextView from './components/TotalTextView'
+import Counter from './components/Counter'
+// import TotalTextView from './components/TotalTextView'
 
 export default function App() {
 
@@ -20,6 +20,7 @@ export default function App() {
   const [hundredDollarBillCount, set100DollarBillCount] = useState(0);
 
   const [openingAmount, setOpeningAmount] = useState(0);
+  const [recordedAmount, setRecordedAmount] = useState(0);
 
 
   // State that tracks coin total and bill total
@@ -27,12 +28,7 @@ export default function App() {
   // const [billTotal, setBillTotal] = useState(0);
 
 
-  // I am working on a function to catch the change in TEXT from CoinCounter.js and update coinTotal State
-  function addToTotal() {
-    console.log('addtototal triggerd')
-  }
-
-
+ // All the calculations of the totals are done here
   let coinTotal = (parseFloat(pennyCount*0.01) + parseFloat(nickelCount*0.05) + parseFloat(dimeCount*0.10) + parseFloat(quarterCount*0.25)).toFixed(2)
 
   let billTotal = (parseFloat(dollarBillCount*1.00) + parseFloat(fiveDollarBillCount*5.00) + parseFloat(tenDollarBillCount*10.00) + parseFloat(twentyDollarBillCount*20.00) + parseFloat(fiftyDollarBillCount*50.00) + parseFloat(hundredDollarBillCount*100.00)).toFixed(2)
@@ -42,73 +38,85 @@ export default function App() {
   let grandTotal = (parseFloat(subTotal) - parseFloat(openingAmount)).toFixed(2)
 
   return (
-    <View style={styles.container}>
 
-      <CoinCounter coinName="Pennies" style={styles.row} counter={0.01} count={setPennyCount}></CoinCounter>
+    
+    <ScrollView contentContainerStyle={styles.wrapper}>
 
-      <CoinCounter coinName="Nickels" style={styles.row} counter={0.05} count={setNickelCount}></CoinCounter>
+    {/* Coin Calculations are done here */}
+      <Counter coinName="Pennies" style={styles.row} counter={0.01} count={setPennyCount}></Counter>
 
-      <CoinCounter coinName="Dimes" style={styles.row} counter={0.10} count={setDimeCount}></CoinCounter>
+      <Counter coinName="Nickels" style={styles.row} counter={0.05} count={setNickelCount}></Counter>
 
-      <CoinCounter coinName="Quarters" style={styles.row} counter={0.25} count={setQuarterCount}></CoinCounter>
+      <Counter coinName="Dimes" style={styles.row} counter={0.10} count={setDimeCount}></Counter>
 
-      {/* Whenever one of the coincounter rerenders, rerender cointotal component with new state */}
+      <Counter coinName="Quarters" style={styles.row} counter={0.25} count={setQuarterCount}></Counter>
+
+      {/* Whenever one of the counter rerenders, rerender cointotal component with new state */}
+
       <View style={styles.row}>
         <Text>Coin Total: ${coinTotal}</Text>
       </View>
 
+      {/* Bill Calculations are done here */}
+    
+      <Counter coinName="1 Dollar Bill" style={styles.row} counter={1.00} count={setDollarBillCount}></Counter>
 
-      <CoinCounter coinName="1 Dollar Bill" style={styles.row} counter={1.00} count={setDollarBillCount}></CoinCounter>
+      <Counter coinName="5 Dollar Bill" style={styles.row} counter={5.00} count={set5DollarBillCount}></Counter>
 
-      <CoinCounter coinName="5 Dollar Bill" style={styles.row} counter={5.00} count={set5DollarBillCount}></CoinCounter>
+      <Counter coinName="10 Dollar Bill" style={styles.row} counter={10.00} count={set10DollarBillCount}></Counter>
 
-      <CoinCounter coinName="10 Dollar Bill" style={styles.row} counter={10.00} count={set10DollarBillCount}></CoinCounter>
+      <Counter coinName="20 Dollar Bill" style={styles.row} counter={20.00} count={set20DollarBillCount}></Counter>
 
-      <CoinCounter coinName="20 Dollar Bill" style={styles.row} counter={20.00} count={set20DollarBillCount}></CoinCounter>
+      <Counter coinName="50 Dollar Bill" style={styles.row} counter={50.00} count={set50DollarBillCount}></Counter>
 
-      <CoinCounter coinName="50 Dollar Bill" style={styles.row} counter={50.00} count={set50DollarBillCount}></CoinCounter>
-
-      <CoinCounter coinName="100 Dollar Bill" style={styles.row} counter={100.00} count={set100DollarBillCount}></CoinCounter>
+      <Counter coinName="100 Dollar Bill" style={styles.row} counter={100.00} count={set100DollarBillCount}></Counter>
 
       <View style={styles.row}>
         <Text>Bill Total: ${billTotal}</Text>
       </View>
 
+      {/* Coin Total + Bill Total */}
       <View style={styles.row}>
-        <Text>Sub Total: ${subTotal}</Text>
+        <Text>Sub Total(Coin Total + Bill Total): ${subTotal}</Text>
       </View>
 
+      {/* Opening amount of the day */}
       <View style={styles.row}>
         <Text>Opening Amount: $</Text>
         <TextInput onChangeText={(number) => setOpeningAmount(number)} style={styles.input} keyboardType={"number-pad"}></TextInput>
       </View>
 
-      
-
+      {/* Total counted minus the opening amount */}
       <View style={styles.row}>
-        <Text>Grand Total: ${grandTotal}</Text>
+        <Text>Grand Total: $ {grandTotal}</Text>
+      </View>
+
+      {/* Total amount recorded on the register. */}
+      <View style={styles.row}>
+        <Text>Recorded Total: $</Text>
+        <TextInput onChangeText={(number) => setRecordedAmount(number)} style={styles.input} keyboardType={"number-pad"}></TextInput>
+      </View>
+
+      {/* Shows how much you are short or over or even by. */}
+      <View style={styles.row}>
+        <Text>Result: $ {(grandTotal - recordedAmount).toFixed(2)}</Text>
       </View>
 
 
       <StatusBar style="auto" />
-    </View>
+    </ScrollView>
   );
 }
 
+// Styles
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
 
-  // input: {
-  //   borderWidth: 2,  // size/width of the border
-  //   borderColor: 'lightgrey',  // color of the border
-  //   paddingLeft: 10,
-  //   marginLeft: 10,
-  // },
+  wrapper: {
+    flexGrow:1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 80
+  },
 
   input: {
     borderWidth: 2,  // size/width of the border
@@ -119,8 +127,11 @@ const styles = StyleSheet.create({
   },
 
   row: {
+    flexGrow: 1,
     flexDirection: 'row',
-    marginBottom: 20,
-    textAlign: 'center'
+    marginBottom: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 300
   }
 });
