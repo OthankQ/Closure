@@ -25,4 +25,10 @@ const styles = StyleSheet.create({
         width: 80,
         marginTop: 5,
         marginBottom: 5
-    }
+    },
+
+    baseText: {
+        fontSize: 40,
+      }
+
+})

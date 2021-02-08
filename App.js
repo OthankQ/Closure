@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
 
-import Counter from './components/Counter'
+import CounterRow from './components/CounterRow'
 // import TotalTextView from './components/TotalTextView'
 
 export default function App() {
@@ -23,11 +23,6 @@ export default function App() {
   const [recordedAmount, setRecordedAmount] = useState(0);
 
 
-  // State that tracks coin total and bill total
-  // const [coinTotal, setCoinTotal] = useState(0);
-  // const [billTotal, setBillTotal] = useState(0);
-
-
  // All the calculations of the totals are done here
   let coinTotal = (parseFloat(pennyCount*0.01) + parseFloat(nickelCount*0.05) + parseFloat(dimeCount*0.10) + parseFloat(quarterCount*0.25)).toFixed(2)
 
@@ -37,69 +32,81 @@ export default function App() {
 
   let grandTotal = (parseFloat(subTotal) - parseFloat(openingAmount)).toFixed(2)
 
+  function isEven() {
+    if (grandTotal == 0.00) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   return (
 
     
     <ScrollView contentContainerStyle={styles.wrapper}>
 
     {/* Coin Calculations are done here */}
-      <Counter coinName="Pennies" style={styles.row} counter={0.01} count={setPennyCount}></Counter>
+      <CounterRow coinName="Pennies" style={styles.row} counter={0.01} count={setPennyCount}></CounterRow>
 
-      <Counter coinName="Nickels" style={styles.row} counter={0.05} count={setNickelCount}></Counter>
+      <CounterRow coinName="Nickels" style={styles.row} counter={0.05} count={setNickelCount}></CounterRow>
 
-      <Counter coinName="Dimes" style={styles.row} counter={0.10} count={setDimeCount}></Counter>
+      <CounterRow coinName="Dimes" style={styles.row} counter={0.10} count={setDimeCount}></CounterRow>
 
-      <Counter coinName="Quarters" style={styles.row} counter={0.25} count={setQuarterCount}></Counter>
+      <CounterRow coinName="Quarters" style={styles.row} counter={0.25} count={setQuarterCount}></CounterRow>
 
       {/* Whenever one of the counter rerenders, rerender cointotal component with new state */}
 
       <View style={styles.row}>
-        <Text>Coin Total: ${coinTotal}</Text>
+        <Text style={styles.baseText}>Coin Total   :   ${coinTotal}</Text>
       </View>
 
       {/* Bill Calculations are done here */}
     
-      <Counter coinName="1 Dollar Bill" style={styles.row} counter={1.00} count={setDollarBillCount}></Counter>
+      <CounterRow coinName="1 Dollar Bill" style={styles.row} counter={1.00} count={setDollarBillCount}></CounterRow>
 
-      <Counter coinName="5 Dollar Bill" style={styles.row} counter={5.00} count={set5DollarBillCount}></Counter>
+      <CounterRow coinName="5 Dollar Bill" style={styles.row} counter={5.00} count={set5DollarBillCount}></CounterRow>
 
-      <Counter coinName="10 Dollar Bill" style={styles.row} counter={10.00} count={set10DollarBillCount}></Counter>
+      <CounterRow coinName="10 Dollar Bill" style={styles.row} counter={10.00} count={set10DollarBillCount}></CounterRow>
 
-      <Counter coinName="20 Dollar Bill" style={styles.row} counter={20.00} count={set20DollarBillCount}></Counter>
+      <CounterRow coinName="20 Dollar Bill" style={styles.row} counter={20.00} count={set20DollarBillCount}></CounterRow>
 
-      <Counter coinName="50 Dollar Bill" style={styles.row} counter={50.00} count={set50DollarBillCount}></Counter>
+      <CounterRow coinName="50 Dollar Bill" style={styles.row} counter={50.00} count={set50DollarBillCount}></CounterRow>
 
-      <Counter coinName="100 Dollar Bill" style={styles.row} counter={100.00} count={set100DollarBillCount}></Counter>
+      <CounterRow coinName="100 Dollar Bill" style={styles.row} counter={100.00} count={set100DollarBillCount}></CounterRow>
 
       <View style={styles.row}>
-        <Text>Bill Total: ${billTotal}</Text>
+        <Text style={styles.baseText}>Bill Total   :   $ {billTotal}</Text>
       </View>
 
       {/* Coin Total + Bill Total */}
       <View style={styles.row}>
-        <Text>Sub Total(Coin Total + Bill Total): ${subTotal}</Text>
+        <Text style={styles.baseText}>Coin Total + Bill Total   :   $ {subTotal}</Text>
       </View>
 
       {/* Opening amount of the day */}
       <View style={styles.row}>
-        <Text>Opening Amount: $</Text>
-        <TextInput onChangeText={(number) => setOpeningAmount(number)} style={styles.input} keyboardType={"number-pad"}></TextInput>
+        <Text style={styles.baseText}>Opening Amount   :   $ </Text>
+        <TextInput placeholder="Amount" onChangeText={(number) => setOpeningAmount(number)} style={styles.input} keyboardType={"number-pad"}></TextInput>
       </View>
 
       {/* Total counted minus the opening amount */}
       <View style={styles.row}>
-        <Text>Grand Total(Sub Total - Opening Amount): $ {grandTotal}</Text>
+        <Text style={styles.baseText}>Sub Total - Opening Amount   :   $ {grandTotal}</Text>
       </View>
 
       {/* Total amount recorded on the register. */}
       <View style={styles.row}>
-        <Text>Recorded Total: $</Text>
-        <TextInput onChangeText={(number) => setRecordedAmount(number)} style={styles.input} keyboardType={"number-pad"}></TextInput>
+        <Text style={styles.baseText}>Recorded Total   :   $</Text>
+        <TextInput placeholder="Amount" onChangeText={(number) => setRecordedAmount(number)} style={styles.input} keyboardType={"number-pad"}></TextInput>
       </View>
 
       {/* Shows how much you are short or over or even by. */}
-      <View style={styles.row}>
-        <Text>Result(Grand Total - Recorded Total): $ {(grandTotal - recordedAmount).toFixed(2)}</Text>
+      <View style={styles.row, {bottomBorderWidth: 0, margin: 20, width: 420, alignItems: 'center'}}>
+        <Text style={styles.baseText}>Result(Counted Total - Recorded Total)   :   </Text>
+      </View>
+
+      <View style={styles.row, {width: 420}, isEven() ? styles.even : styles.notEven}>
+        <Text style={styles.baseText}>$ {(grandTotal - recordedAmount).toFixed(2)}</Text>
       </View>
 
 
@@ -116,28 +123,53 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 80,
-    borderColor: 'red',
-    borderWidth: 1
+    // borderColor: 'red',
+    borderWidth: 1,
+    alignSelf: 'stretch',
+
   },
 
   input: {
-    borderWidth: 1,  // size/width of the border
+    borderWidth: 0.5,  // size/width of the border
     borderColor: 'lightgrey',  // color of the border
     paddingLeft: 10,
     marginLeft: 10,
     width: 80,
-    marginTop: 5,
-    marginBottom: 5
   },
 
   row: {
     flexGrow: 1,
     flexDirection: 'row',
-    marginBottom: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 400,
-    borderColor: 'red',
-    borderWidth: 1
+    width: 420,
+    // alignSelf: 'stretch',
+
+    fontSize: 400,
+    borderBottomColor: 'grey',
+    borderBottomWidth: 0.3,
+    paddingTop: 20,
+    paddingBottom: 20,
+    height: 100
+  },
+
+  baseText: {
+    fontSize: 18,
+  },
+
+  even: {
+    backgroundColor: 'lightgreen',
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 80,
+  },
+
+  notEven: {
+    backgroundColor: 'pink',
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 80,
   }
 });
